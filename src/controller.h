@@ -5,7 +5,7 @@
 
 class Controller {
     public:
-        void HandleInput() const;
+        void HandleInput(bool &running) const;
 };
 
 #endif
