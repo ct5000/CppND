@@ -2,17 +2,21 @@
 
 
 
-Spaceship::Spaceship(int screenWidth, int screenHeight, int gridWidth, int gridHeight) {
+Spaceship::Spaceship(int gridWidth, int gridHeight) : _gridWidth(gridWidth), _gridHeight(gridHeight) {
     _xPos = ( gridWidth) / 2;
     _yPos = (gridHeight) - 2;
 }
 
 void Spaceship::UpdatePosition(std::string keyInput) {
     if (keyInput == "left") {
-        _xPos--;
+        if (_xPos > 1) {
+            _xPos--;
+        }
     }
     else if(keyInput == "right") {
-        _xPos++;
+        if (_xPos < _gridWidth - 2) {
+            _xPos++;
+        }
     }
 }
 
