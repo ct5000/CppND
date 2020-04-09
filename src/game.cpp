@@ -3,7 +3,7 @@
 
 
 Game::Game(std::size_t gridWidth, std::size_t gridHeight, Renderer &renderer) 
-        : ship(gridWidth, gridHeight) {
+        : ship(gridWidth, gridHeight), alien(gridWidth, gridHeight, 0, 0, 1, 1) {
     Render(renderer);
 }
 
@@ -40,11 +40,13 @@ void Game::Update(std::string userInput, bool &running) {
     else {
         ship.UpdatePosition(userInput);
     }
+    alien.UpdatePosition();
 }
 
 void Game::Render(Renderer &renderer) {
     renderer.ClearScreen();
     renderer.RenderSpaceship(ship);
+    renderer.RenderAlien(alien);
     renderer.UpdateScreen();
 }
 

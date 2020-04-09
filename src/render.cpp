@@ -46,7 +46,7 @@ void Renderer::RenderSpaceship(Spaceship &ship) {
     block.x = ship.XPos() * block.w;
     block.y = (ship.YPos() - 1) * block.h;
     SDL_RenderFillRect(_renderer, &block);
-    
+
 
     block.x = ship.XPos() * block.w;
     block.y = ship.YPos() * block.h;
@@ -68,4 +68,33 @@ void Renderer::RenderSpaceship(Spaceship &ship) {
     block.y = (ship.YPos() + 1) * block.h;
     SDL_RenderFillRect(_renderer, &block);
 
+}
+
+void Renderer::RenderAlien(Alien &alien) {
+    SDL_Rect block;
+    block.w = _screen_width / _grid_width;
+    block.h = _screen_height / _grid_height;
+
+    SDL_SetRenderDrawColor(_renderer, 0xFF, 0xCC, 0xFF, 0xFF);
+
+    for (int i = -1; i <= 1; i++) {
+        block.x = (alien.XPos() + i) * block.w;
+        block.y = (alien.YPos() - 1) * block.h;
+        SDL_RenderFillRect(_renderer, &block);
+    }
+
+    for (int i = -2; i <= 2; i++) {
+        block.x = (alien.XPos() + i) * block.w;
+        block.y = (alien.YPos()) * block.h;
+        SDL_RenderFillRect(_renderer, &block);
+    }
+
+    block.x = (alien.XPos() - 2) * block.w;
+    block.y = (alien.YPos() + 1) * block.h;
+    SDL_RenderFillRect(_renderer, &block);
+
+    block.x = (alien.XPos() + 2) * block.w;
+    block.y = (alien.YPos() + 1) * block.h;
+    SDL_RenderFillRect(_renderer, &block);
+    
 }

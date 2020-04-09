@@ -1,11 +1,12 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include <string>
 
 
 class Controller {
     public:
-        void HandleInput(bool &running) const;
+        std::string HandleInput() const;
 };
 
 #endif

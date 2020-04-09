@@ -3,6 +3,7 @@
 
 #include "SDL.h"
 #include "spaceship.h"
+#include "alien.h"
 
 class Renderer {
     public:
@@ -12,6 +13,7 @@ class Renderer {
         void ClearScreen();
         void UpdateScreen();
         void RenderSpaceship(Spaceship &ship);
+        void RenderAlien(Alien &alien);
 
     private:
         SDL_Window *_window;

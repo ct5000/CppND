@@ -17,6 +17,7 @@ class Game {
 
     private: 
         Spaceship ship;
+        Alien alien;
 
         int score{0};
 

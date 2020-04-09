@@ -5,25 +5,28 @@
 
 
 
-void Controller::HandleInput(bool &running) const {
+std::string Controller::HandleInput() const {
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
         if (e.type == SDL_QUIT) {
-            running = false;
+            return "quit";
         }
         else if(e.type == SDL_KEYDOWN) {
             switch(e.key.keysym.sym) {
                 case SDLK_UP:
-                    std::cout << "Up tast \n";
+                    return "up";
                     break;
                 case SDLK_LEFT:
-                    std::cout << "Venstre tast \n";
+                    return "left";
                     break;
                 case SDLK_RIGHT:
-                    std::cout << "Højre tast \n";
+                    return "right";
                     break;
+                default:
+                    return "";
             }
         }
     }
+    return "";
 }
 
