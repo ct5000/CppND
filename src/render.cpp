@@ -27,19 +27,45 @@ Renderer::~Renderer() {
     SDL_Quit();
 }
 
+void Renderer::ClearScreen() {
+    SDL_SetRenderDrawColor(_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
+    SDL_RenderClear(_renderer);
+}
 
-/*
-SDL_Window* window = NULL;
-    SDL_Surface* screenSurface = NULL;
+void Renderer::UpdateScreen() {
+    SDL_RenderPresent(_renderer);
+}
+
+void Renderer::RenderSpaceship(Spaceship &ship) {
+    SDL_Rect block;
+    block.w = _screen_width / _grid_width;
+    block.h = _screen_height / _grid_height;
+
+    SDL_SetRenderDrawColor(_renderer, 0xFF, 0xCC, 0xFF, 0xFF);
+
+    block.x = ship.XPos() * block.w;
+    block.y = (ship.YPos() - 1) * block.h;
+    SDL_RenderFillRect(_renderer, &block);
     
-    else {
-        
-        else {
-            screenSurface = SDL_GetWindowSurface(window) ;
-            SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-            SDL_UpdateWindowSurface(window);
-            SDL_Delay(2000);
-        }
-    }
-    
-*/
+
+    block.x = ship.XPos() * block.w;
+    block.y = ship.YPos() * block.h;
+    SDL_RenderFillRect(_renderer, &block);
+
+    block.x = (ship.XPos() - 1) * block.w;
+    block.y = ship.YPos() * block.h;
+    SDL_RenderFillRect(_renderer, &block);
+
+    block.x = (ship.XPos() + 1) * block.w;
+    block.y = ship.YPos() * block.h;
+    SDL_RenderFillRect(_renderer, &block);
+
+    block.x = (ship.XPos() - 1) * block.w;
+    block.y = (ship.YPos() + 1) * block.h;
+    SDL_RenderFillRect(_renderer, &block);
+
+    block.x = (ship.XPos() + 1) * block.w;
+    block.y = (ship.YPos() + 1) * block.h;
+    SDL_RenderFillRect(_renderer, &block);
+
+}
