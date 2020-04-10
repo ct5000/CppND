@@ -8,6 +8,8 @@
 #include "controller.h"
 #include "render.h"
 #include "spaceship.h"
+#include <vector>
+#include <memory>
 
 class Game {
     public:
@@ -16,12 +18,15 @@ class Game {
 
 
     private: 
-        Spaceship ship;
-        Alien alien;
+        Spaceship _ship;
+        std::vector<std::unique_ptr<Alien>> _aliens;
+        std::vector<std::unique_ptr<Bullet>> _shipBullets;
 
-        int score{0};
+        int _score{0};
+        int _rows{4};
+        int _columns{6};
 
-        void Update(std::string userInput, bool &running);
+        void Update(std::string userInput, bool &running, int frameCount);
         void Render(Renderer &renderer);
 
 };

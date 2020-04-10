@@ -1,6 +1,9 @@
 #ifndef ALIEN_H
 #define ALIEN_H
 
+#include "bullet.h"
+
+
 
 class Alien {
     public:
@@ -10,6 +13,7 @@ class Alien {
         void UpdatePosition();
         int YPos() { return _yPos;}
         int XPos() { return _xPos;}
+        bool Hit(Bullet &bullet);
 
     private:
         int _xPos;

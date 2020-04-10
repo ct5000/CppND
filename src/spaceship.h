@@ -2,6 +2,7 @@
 #define SPACESHIP_H
 
 #include <string>
+#include "bullet.h"
 
 
 class Spaceship {
@@ -10,6 +11,7 @@ class Spaceship {
         void UpdatePosition(std::string keyInput);
         int XPos() {return _xPos;}
         int YPos() {return _yPos;}
+        Bullet ShootBullet();
 
     private:
         int _xPos;

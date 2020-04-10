@@ -98,3 +98,15 @@ void Renderer::RenderAlien(Alien &alien) {
     SDL_RenderFillRect(_renderer, &block);
     
 }
+
+void Renderer::RenderBullet(Bullet &bullet) {
+    SDL_Rect block;
+    block.w = _screen_width / _grid_width;
+    block.h = _screen_height / _grid_height;
+
+    SDL_SetRenderDrawColor(_renderer, 0xFF, 0xCC, 0xFF, 0xFF);
+
+    block.x = bullet.XPos() * block.w;
+    block.y = bullet.YPos() * block.h;
+    SDL_RenderFillRect(_renderer, &block);
+}

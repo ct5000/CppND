@@ -5,13 +5,13 @@ Alien::Alien(int gridWidth, int gridHeight, int row, int column, int totalRows, 
             : _gridWidth(gridWidth), _gridHeight(gridHeight), _row(row), _column(column),
             _totalRows(totalRows), _totalColumns(totalColumns) {
     _xPos = column * 7 + 3;
-    _yPos = row * 5 + 3;
+    _yPos = row * 4 + 3;
 }
 
 void Alien::UpdatePosition() {
     if (_direction == Direction::kRight) {
-        if (_xPos > _gridWidth - (_totalRows - _row) - 3) {
-            _yPos += 5;
+        if (_xPos > _gridWidth - 7 * (_totalColumns - _column - 1) -  + 4) {
+            _yPos += 2;
             _direction = Direction::kLeft;
         }
         else {
@@ -19,8 +19,8 @@ void Alien::UpdatePosition() {
         }
     }
     else {
-        if (_xPos < _row * 7 + 3) {
-            _yPos += 5;
+        if (_xPos < _column * 7 + 3) {
+            _yPos += 2;
             _direction = Direction::kRight;
         }
         else {
@@ -29,5 +29,10 @@ void Alien::UpdatePosition() {
     }
 }
 
+bool Alien::Hit(Bullet &bullet) {
+    bool xBox = bullet.XPos() >= _xPos - 1 && bullet.XPos() <= _xPos + 1;
+    bool yBox = bullet.YPos() >= _yPos - 2 && bullet.YPos() <= _yPos + 2;
+    return xBox && yBox;
+}
 
 

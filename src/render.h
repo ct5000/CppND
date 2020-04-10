@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "spaceship.h"
 #include "alien.h"
+#include "bullet.h"
 
 class Renderer {
     public:
@@ -14,6 +15,7 @@ class Renderer {
         void UpdateScreen();
         void RenderSpaceship(Spaceship &ship);
         void RenderAlien(Alien &alien);
+        void RenderBullet(Bullet &bullet);
 
     private:
         SDL_Window *_window;

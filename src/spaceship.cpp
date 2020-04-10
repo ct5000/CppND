@@ -20,4 +20,8 @@ void Spaceship::UpdatePosition(std::string keyInput) {
     }
 }
 
+Bullet Spaceship::ShootBullet() {
+    return Bullet(_xPos, _yPos - 1, -1);
+}
+
 
