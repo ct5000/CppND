@@ -1,5 +1,6 @@
 # CppND
 This is my final project for the nano degree program for C++ from Udacity.
+It is a clone of the classic game Space Invaders.
 
 ## Dependencies for Running Locally
 * cmake >= 3.7
@@ -25,4 +26,8 @@ This is my final project for the nano degree program for C++ from Udacity.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./Capstone`.
+
+## Game Instructions
+The game is played with right and left arrow to move the spaceship, and the player can shoot with arrow up.
+The purpose of the game is to shoot all the aliens. 
 
