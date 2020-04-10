@@ -1,6 +1,10 @@
 #include "render.h"
 #include <iostream>
 
+/*
+Initializes the renderer with opening a window.
+Takes input for screen width, screen height, grid width, and grid height
+*/
 Renderer::Renderer(const std::size_t screen_width, const std::size_t screen_height, 
                 const std::size_t grid_width, const std::size_t grid_height) 
                 :_screen_width(screen_width), _screen_height(screen_height),
@@ -22,20 +26,32 @@ Renderer::Renderer(const std::size_t screen_width, const std::size_t screen_heig
     }
 }
 
+/*
+Destructor that closes the window
+*/
 Renderer::~Renderer() {
     SDL_DestroyWindow(_window);
     SDL_Quit();
 }
 
+/*
+Clear the screen for picture
+*/
 void Renderer::ClearScreen() {
     SDL_SetRenderDrawColor(_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
     SDL_RenderClear(_renderer);
 }
 
+/*
+Updates the screen
+*/
 void Renderer::UpdateScreen() {
     SDL_RenderPresent(_renderer);
 }
 
+/*
+Renders the spaceship. Takes a reference to a spaceship
+*/
 void Renderer::RenderSpaceship(Spaceship &ship) {
     SDL_Rect block;
     block.w = _screen_width / _grid_width;
@@ -70,6 +86,9 @@ void Renderer::RenderSpaceship(Spaceship &ship) {
 
 }
 
+/*
+Renders the alien. Takes a reference to an alien as input
+*/
 void Renderer::RenderAlien(Alien &alien) {
     SDL_Rect block;
     block.w = _screen_width / _grid_width;
@@ -99,6 +118,9 @@ void Renderer::RenderAlien(Alien &alien) {
     
 }
 
+/*
+Renders the bullets. Take a reference to a bullet
+*/
 void Renderer::RenderBullet(Bullet &bullet) {
     SDL_Rect block;
     block.w = _screen_width / _grid_width;
@@ -109,4 +131,13 @@ void Renderer::RenderBullet(Bullet &bullet) {
     block.x = bullet.XPos() * block.w;
     block.y = bullet.YPos() * block.h;
     SDL_RenderFillRect(_renderer, &block);
+}
+
+/*
+Updates the title of the window. Takes three ints: score, lives, and frame
+*/
+void Renderer::UpdateWindowTitle(int score, int lives, int frames) {
+    std::string title{"Score: " + std::to_string(score) + " Lives: " + std::to_string(lives)
+                    + " FPS: " + std::to_string(frames)};
+    SDL_SetWindowTitle(_window, title.c_str());
 }

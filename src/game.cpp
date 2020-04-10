@@ -2,7 +2,10 @@
 #include <cstdlib>
 #include <iostream>
 
-
+/*
+Initializes the game with the grid width, grid height and the renderer. Also initializez
+the spaceship and the aliens
+*/
 Game::Game(std::size_t gridWidth, std::size_t gridHeight, Renderer &renderer) 
         : _ship(gridWidth, gridHeight) {
     for (int i = 0; i < _rows; i++) {
@@ -13,6 +16,9 @@ Game::Game(std::size_t gridWidth, std::size_t gridHeight, Renderer &renderer)
     Render(renderer);
 }
 
+/*
+Runs the game. Takes a controller, a renderer, and the target frame rate as input
+*/
 void Game::Run(Controller const &controller, Renderer &renderer, std::size_t targetFrameDuration) {
     Uint32 titleTimestamp = SDL_GetTicks();
     Uint32 frameStart;
@@ -34,6 +40,11 @@ void Game::Run(Controller const &controller, Renderer &renderer, std::size_t tar
         frameDuration = frameEnd - frameStart;
 
         //Opdater så titel bliver ændret med score, liv og framerate
+        if (frameEnd - titleTimestamp >= 500) {
+            renderer.UpdateWindowTitle(_score, _ship.Lives(), frameCount);
+            frameCount = 0;
+            titleTimestamp = frameEnd;
+        }
 
         if (frameDuration < targetFrameDuration) {
             SDL_Delay(targetFrameDuration - frameDuration);
@@ -41,18 +52,23 @@ void Game::Run(Controller const &controller, Renderer &renderer, std::size_t tar
     }
 }
 
+/*
+Updates the game for positions and if a new bullet has been fired from either spaceship or alien.
+It takes a string as user input, a boolen for running and the frameCout
+*/
 void Game::Update(std::string userInput, bool &running, int frameCount) {
     if(userInput == "quit") {
         running = false;
     }
     else if(userInput == "up") {
-        if (_shipBullets.size() < 6 && frameCount % 2 == 0) {
+        if (_shipBullets.size() < 6) {
             _shipBullets.emplace_back(new Bullet(_ship.ShootBullet()));
         }
     }
     else {
         _ship.UpdatePosition(userInput);
     }
+    // Updates the position of the aliens every 5 frames
     if (frameCount % 5 == 0) {
         for (int i = 0; i < _aliens.size(); i++) {
             (*_aliens[i]).UpdatePosition();
@@ -61,6 +77,7 @@ void Game::Update(std::string userInput, bool &running, int frameCount) {
             }
         }
     }
+    //Updates position for the bullets shot from the spaceship and checks if inbound
     std::vector<int> bulletIndexBoundsShip;
     for (int i = _shipBullets.size() - 1; i >= 0; i--) {
         (*_shipBullets[i]).UpdatePosition();
@@ -71,6 +88,7 @@ void Game::Update(std::string userInput, bool &running, int frameCount) {
     for (int i = 0; i < bulletIndexBoundsShip.size(); i++) {
         _shipBullets.erase(_shipBullets.begin() + bulletIndexBoundsShip[i]);
     }
+    //Updates position for the bullets shot from the aliens and checks if inbound
     std::vector<int> bulletIndexBoundsAlien;
     for (int i = _alienBullets.size() - 1; i >= 0; i--) {
         (*_alienBullets[i]).UpdatePosition();
@@ -81,6 +99,7 @@ void Game::Update(std::string userInput, bool &running, int frameCount) {
     for (int i = 0; i < bulletIndexBoundsAlien.size(); i++) {
         _alienBullets.erase(_alienBullets.begin() + bulletIndexBoundsAlien[i]);
     }
+    //Checks if bullets hit aliens and deletes both aliens and bullets
     std::vector<int> alienIndex;
     std::vector<int> bulletIndexAlien;
     for (int i = _aliens.size() - 1; i >= 0; i--) {
@@ -97,9 +116,9 @@ void Game::Update(std::string userInput, bool &running, int frameCount) {
         _aliens.erase(_aliens.begin() + alienIndex[i]);
     }
     for (int i = 0; i < bulletIndexAlien.size(); i++) {
-        std::cout << "Ship bullets: " << _shipBullets.size() << " Index: " << bulletIndexAlien[i] << std::endl;
         _shipBullets.erase(_shipBullets.begin() + bulletIndexAlien[i]);
     }
+    //Check if the bullets hits the spaceship and deletes bullet. 
     std::vector<int> bulletIndexShip;
     for (int j = _alienBullets.size() - 1; j >= 0; j--) {
         if(_ship.Hit(*_alienBullets[j])) {
@@ -111,6 +130,9 @@ void Game::Update(std::string userInput, bool &running, int frameCount) {
     }
 }
 
+/*
+Renders all the objects on the screen. Takes a renderer as input
+*/
 void Game::Render(Renderer &renderer) {
     renderer.ClearScreen();
     renderer.RenderSpaceship(_ship);
@@ -126,6 +148,9 @@ void Game::Render(Renderer &renderer) {
     renderer.UpdateScreen();
 }
 
+/*
+Checks if the game end conditions has been met. Takes a reference to a boolean. 
+*/
 void Game::CheckGameEnd(bool &running) {
     if (_aliens.size() <= 0) {
         running = false;

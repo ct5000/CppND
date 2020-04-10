@@ -4,7 +4,9 @@
 #include "controller.h"
 
 
-
+/*
+Handles input from the user and returns it as a string
+*/
 std::string Controller::HandleInput() const {
     SDL_Event e;
     while (SDL_PollEvent(&e)) {

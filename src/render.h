@@ -16,6 +16,7 @@ class Renderer {
         void RenderSpaceship(Spaceship &ship);
         void RenderAlien(Alien &alien);
         void RenderBullet(Bullet &bullet);
+        void UpdateWindowTitle(int score, int lives, int frames);
 
     private:
         SDL_Window *_window;

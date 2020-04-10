@@ -4,7 +4,9 @@
 #include "render.h"
 #include "game.h"
 
-
+/*
+Runs the game by determining the window size and calling the appropriate functions
+*/
 
 int main() {
     constexpr std::size_t kFramesPerSecond{60};
@@ -12,13 +14,11 @@ int main() {
     constexpr std::size_t kScreenWidth{640};
     constexpr std::size_t kScreenHeight{640};
     constexpr std::size_t kGridWidth{80};
-    constexpr std::size_t kGridHeight{40};
-    
+    constexpr std::size_t kGridHeight{40};  
     bool running = true;
     Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);
     Controller controller;
     Game game(kGridWidth,kGridHeight, renderer);
     game.Run(controller, renderer, kFrameDuration);
-    
     return 0;
 }
