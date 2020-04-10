@@ -14,6 +14,7 @@ class Alien {
         int YPos() { return _yPos;}
         int XPos() { return _xPos;}
         bool Hit(Bullet &bullet);
+        Bullet ShootBullet();
 
     private:
         int _xPos;

@@ -21,7 +21,16 @@ void Spaceship::UpdatePosition(std::string keyInput) {
 }
 
 Bullet Spaceship::ShootBullet() {
-    return Bullet(_xPos, _yPos - 1, -1);
+    return Bullet(_xPos, _yPos - 1, -1, _gridHeight);
 }
 
+bool Spaceship::Hit(Bullet &bullet) {
+    bool xBox = bullet.XPos() >= _xPos - 1 && bullet.XPos() <= _xPos + 1;
+    bool yBox = bullet.YPos() >= _yPos - 2 && bullet.YPos() <= _yPos + 2;
+    if (xBox && yBox) {
+        _lives--;
+        return true;
+    }
+    return false;
+}
 
